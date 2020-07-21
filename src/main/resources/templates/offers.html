@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>West Compass</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<main>
+    <nav class="navbar navbar-expand-lg navbar-background">
+        <a class="nav-link text-white active h5" href="/">Home</a>
+        <a class="nav-link text-white active h5" href="/users/register">Register Seller</a>
+        <div class="collapse navbar-collapse d-flex justify-content-end">
+            <ul class="navbar-nav row">
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/">Add Brand</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/">Add Model</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Offer</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/offers/">All Offers</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h2 class="text-center text-white mt-5">West Compass Offers</h2>
+        <hr style="width: 50%"/>
+        <div class='row mb-4 d-flex justify-content-around'>
+
+            <th:block th:each="o, offerStat: ${offers}">
+                <div class="col-md-4 d-flex flex-column bg-text mb-3">
+                    <h2>Car brand: <span th:text="${o.model.brand.name}"/></h2>
+                    <h4>Model: <span th:text="${o.model.name}"/></h4>
+                    <h4>Year: <span th:text="${o.year}"/></h4>
+                    <h4>Engine: <span th:text="${o.engine}"/></h4>
+                    <h4><a class="btn-block" th:href="@{/cars/details/{id}(id=${o.id})}">Details</a></h4>
+                </div>
+            </th:block>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>

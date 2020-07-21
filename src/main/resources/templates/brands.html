@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>West Compass</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<main>
+    <nav class="navbar navbar-expand-lg navbar-background">
+        <a class="nav-link text-white active h5" href="/">Home</a>
+        <a class="nav-link text-white active h5" href="/users/register">Register Seller</a>
+        <div class="collapse navbar-collapse d-flex justify-content-end">
+            <ul class="navbar-nav row">
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/">Add Brand</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/">Add Model</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Offer</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link text-white active font-weight-bold" href="/offers">All Offers</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h2 class="text-center text-white mt-5">West Compass Offers</h2>
+        <hr style="width: 50%"/>
+        <div class='row mb-4 d-flex justify-content-around'>
+
+            <div th:each="brand, brandStat: ${brands}" class="brand-section col-md-5 d-flex flex-column mb-1">
+                <h2>Car brand:
+                    <span th:text="${brand.name}"/>
+                </h2>
+                <div>Models:
+
+                    <table>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Start Year</th>
+                            <th>End Year</th>
+                            <th>Picture</th>
+                        </tr>
+                        <tr th:each="model, modelStat: ${brand.models}">
+                            <th th:text="${modelStat.index + 1}">No</th>
+                            <th th:text="${model.name}">Name</th>
+                            <th th:text="${model.category}">Category</th>
+                            <th th:text="${model.startYear}">Start Year</th>
+                            <th th:text="${model.endYear}">End Year</th>
+                            <th><img th:src="${model.imageUrl}" class="img-thumbnail rounded"></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>
