@@ -1,9 +1,11 @@
 package softuni.springbootvehicles.service;
 
+import softuni.springbootvehicles.model.entity.Model;
 import softuni.springbootvehicles.model.entity.Offer;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface OfferService {
 
@@ -21,4 +23,5 @@ public interface OfferService {
 
     List<Offer> createOffersBatch(List<Offer> offers);
 
+    Optional<Model> findModelById(Long modelId);
 }

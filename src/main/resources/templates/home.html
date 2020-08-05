@@ -1,35 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>West Compass</title>
-    <link rel="stylesheet" href="/css/reset-css.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head('Auto Dealer Shop: Home')"/>
 <body>
 <main class="main">
-    <nav class="navbar navbar-expand-lg navbar-background">
-        <a class="nav-link text-white active h5" href="/">Home</a>
-        <a class="nav-link text-white active h5" href="/users/register">Register Seller</a>
-        <div class="collapse navbar-collapse d-flex justify-content-end">
-            <ul class="navbar-nav row">
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Brand</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/">Add Model</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Offer</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers">All Offers</a>
-                </li>
+    <nav th:replace="fragments/menu::menu"/>
 
-            </ul>
-        </div>
-    </nav>
     <div class="container-fluid">
         <h2 class="text-center text-white ">West Compass Dealer Shop</h2>
         <hr style="width: 50%"/>
@@ -44,5 +19,6 @@
         </div>
     </div>
 </main>
+<footer th:replace="fragments/footer::footer"/>
 </body>
 </html>

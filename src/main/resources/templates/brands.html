@@ -1,35 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>West Compass</title>
-    <link rel="stylesheet" href="/css/reset-css.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<head th:replace="fragments/head::head('Auto Dealer Shop: Brands')"/>
 <body>
 <main>
-    <nav class="navbar navbar-expand-lg navbar-background">
-        <a class="nav-link text-white active h5" href="/">Home</a>
-        <a class="nav-link text-white active h5" href="/users/register">Register Seller</a>
-        <div class="collapse navbar-collapse d-flex justify-content-end">
-            <ul class="navbar-nav row">
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/">Add Brand</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/">Add Model</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Offer</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers">All Offers</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
+    <nav th:replace="fragments/menu::menu"/>
     <div class="container">
         <h2 class="text-center text-white mt-5">West Compass Offers</h2>
         <hr style="width: 50%"/>
@@ -51,19 +25,19 @@
                             <th>Picture</th>
                         </tr>
                         <tr th:each="model, modelStat: ${brand.models}">
-                            <th th:text="${modelStat.index + 1}">No</th>
-                            <th th:text="${model.name}">Name</th>
-                            <th th:text="${model.category}">Category</th>
-                            <th th:text="${model.startYear}">Start Year</th>
-                            <th th:text="${model.endYear}">End Year</th>
-                            <th><img th:src="${model.imageUrl}" class="img-thumbnail rounded"></th>
+                            <td th:text="${modelStat.index + 1}">No</td>
+                            <td th:text="${model.name}">Name</td>
+                            <td th:text="${model.category}">Category</td>
+                            <td th:text="${model.startYear}">Start Year</td>
+                            <td th:text="${model.endYear}">End Year</td>
+                            <td><img th:src="${model.imageUrl}" class="img-thumbnail rounded"></td>
                         </tr>
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
 </main>
+<footer th:replace="fragments/footer::footer"/>
 </body>
 </html>

@@ -1,182 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>West Compass</title>
-    <link rel="stylesheet" href="/css/reset-css.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<head th:replace="fragments/head::head('Auto Dealer Shop: Add New Offer')"/>
 <body>
 <main class="main">
-    <nav class="navbar navbar-expand-lg navbar-background">
-        <a class="nav-link text-white active h5" href="/">Home</a>
-        <a class="nav-link text-white active h5" href="/users/register">Register Seller</a>
-        <div class="collapse navbar-collapse d-flex justify-content-end">
-            <ul class="navbar-nav row">
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/">Add Brand</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/">Add Model</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers/add">Add Offer</a>
-                </li>
-                <li class="nav-item col-md-3">
-                    <a class="nav-link text-white active font-weight-bold" href="/offers">All Offers</a>
-                </li>
+    <nav th:replace="fragments/menu::menu"/>
 
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
+    <div class="container">
         <h2 class="text-center text-white">Upload Offer</h2>
-        <form th:object="${offer}" class="mx-auto w-15" method="POST">
+        <form th:object="${offer}" class="mx-auto col-md-6 d-flex flex-column justify-content-center" method="POST">
+            <div class="form-group ">
+                <label class="text-center text-white font-weight-bold" for="category">Vehicle Category</label>
+                <select th:field="*{category}" id="category" class="form-control">
+                    <option th:each="cat : ${T(softuni.springbootvehicles.model.entity.VehicleCategory).values()}"
+                            th:value="${cat}"
+                            th:text="${cat}" th:selected="${offer.category == cat}">
+                        Vehicle Category
+                    </option>
+                </select>
+            </div>
 
-            <div class="col col-md-3">
-                <div class="form-group ">
-                    <label for="year" class="text-center text-white font-weight-bold">Select Year</label>
-                    <input type="number" class="form-control" placeholder="Year" id="year" name="year"
-                           th:value="*{year}"/>
-                </div>
+            <div class="form-group">
+                <label class="text-center text-white font-weight-bold" for="model">Model</label>
+                <select th:field="*{modelId}" id="model" class="form-control">
+                    <option value="">- Select a model -</option>
+                    <optgroup th:each="brand : ${brands}" th:label="|-- ${brand.name} --|">
+                        <option th:each="brand_model : ${brand.models}" th:value="${brand_model.id}"
+                                th:text="|   ${brand.name} ${brand_model.name}|"
+                                th:selected="${offer.model != null && brand_model.id == offer.model.id}">
+                            Model
+                        </option>
+                    </optgroup>
+                </select>
             </div>
-            <div class="col col-md-3">
-                <div class="form-group ">
-                    <label for="price" class="text-center text-white font-weight-bold">Select Price</label>
-                    <input type="number" class="form-control" placeholder="Price" id="price" name="price"
-                           th:value="*{price}"/>
-                </div>
+            <div class="form-group ">
+                <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
+                <select th:field="*{engine}" id="engine" class="form-control">
+                    <option value="">- Select engine type -</option>
+                    <option th:each="eng_type : ${T(softuni.springbootvehicles.model.entity.EngineType).values()}"
+                            th:value="${eng_type}"
+                            th:text="${eng_type}" th:selected="${offer.engine == eng_type}">
+                        Engine Type
+                    </option>
+                </select>
             </div>
-            <!--            <div class="col col-md-12">-->
-            <!--                <div class="form-group ">-->
-            <!--                    <div class="label-holder d-flex justify-content-center">-->
-            <!--                        <label class="text-center text-white font-weight-bold" for="model">Select model-->
-            <!--                            <select id="model" name="model" class="form-control">-->
-            <!--                                <option value="">C class</option>-->
-            <!--                                <option value="">3 Series</option>-->
-            <!--                                <option value="">Celica</option>-->
-            <!--                            </select>-->
-            <!--                        </label>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="col col-md-3">-->
-            <!--                <div class="form-group ">-->
-            <!--                    <div class="label-holder d-flex justify-content-center">-->
-            <!--                        <label class="text-center text-white font-weight-bold" for="engine">Engine-->
-            <!--                            <select id="engine" name="engine" class="form-control">-->
-            <!--                                <option value="Diesel">Diesel</option>-->
-            <!--                                <option value="Gasoline">Gasoline</option>-->
-            <!--                                <option value="Electric">Electric</option>-->
-            <!--                            </select>-->
-            <!--                        </label>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col col-md-3"></div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="year">Mileage-->
-            <!--                                <input type="number" class="form-control" placeholder="Mileage" name="mileage"-->
-            <!--                                       id="mileage">-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group ">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="engine">Category-->
-            <!--                                <select id="category" name="category" class="form-control">-->
-            <!--                                    <option value="cabrio">Cabrio</option>-->
-            <!--                                    <option value="sedan">Sedan</option>-->
-            <!--                                    <option value="hatchback">Hatchback</option>-->
-            <!--                                    <option value="buss">Buss</option>-->
-            <!--                                    <option value="truck">Truck</option>-->
-            <!--                                </select>-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col col-md-3"></div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="price">Price-->
-            <!--                                <input type="number" class="form-control" placeholder="Price" name="price" id="price">-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group ">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="transmission">Transmission-->
-            <!--                                <select id="transmission" name="transmission" class="form-control">-->
-            <!--                                    <option value="Manual">Manual</option>-->
-            <!--                                    <option value="Automatic">Automatic</option>-->
-            <!--                                    <option value="Semiauto">Semi-auto</option>-->
-            <!--                                </select>-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col col-md-3"></div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="imageUrl">Picture Url-->
-            <!--                                <input type="text" class="form-control" name="imageUrl" id="imageUrl"-->
-            <!--                                       placeholder="Picture Url">-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col col-md-3">-->
-            <!--                    <div class="form-group ">-->
-            <!--                        <div class="label-holder d-flex justify-content-center">-->
-            <!--                            <label class="text-center text-white font-weight-bold" for="username">Seller username-->
-            <!--                                <select id="username" name="username" class="form-control">-->
-            <!--                                    <option value="">Select username</option>-->
-            <!--                                    <option value="">Pesho</option>-->
-            <!--                                    <option value="">Gosho</option>-->
+            <div class="form-group ">
+                <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
+                <select th:field="*{transmission}" id="transmission" class="form-control">
+                    <option value="">- Select transmission type -</option>
+                    <option th:each="trans_type : ${T(softuni.springbootvehicles.model.entity.TransmissionType).values()}"
+                            th:value="${trans_type}"
+                            th:text="${trans_type}" th:selected="${offer.transmission == trans_type}">
+                        Transmission type
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="year" class="text-white font-weight-bold">Year</label>
+                <input th:field="*{year}" id="year" type="number" min="1900" max="2099" step="1" class="form-control"
+                       placeholder="Manufacturing year"/>
+            </div>
+            <div class="form-group">
+                <label for="mileage" class="text-white font-weight-bold">Mileage</label>
+                <input th:field="*{mileage}" id="mileage" type="number" min="0" max="900000" step="1000"
+                       class="form-control"
+                       placeholder="Mileage in kilometers"/>
+            </div>
 
-            <!--                                </select>-->
-            <!--                            </label>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                            <label class="text-white font-weight-bold" for="description">Description
-                                <textarea th:value="*{description}" type="textarea" class="form-control"
-                                          name="description"
-                                          id="description" rows="3" cols="80"
-                                          placeholder="Description"></textarea>
-                            </label>
-                    </div>
-                </div>
+            <div class="form-group ">
+                <label for="price" class="text-center text-white font-weight-bold">Price</label>
+                <input th:field="*{price}" id="price" type="number" min="0" step="100" class="form-control"
+                       placeholder="Suggested Price"/>
             </div>
+
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea th:field="*{description}" id="description" type="textarea" class="form-control" rows="3"
+                          cols="80"
+                          placeholder="Description"></textarea>
+            </div>
+
             <div class="row">
                 <div class="col col-md-4"></div>
                 <div class="col col-md-4">
-                    <div class="button-holder d-flex justify-content-center">
-                        <input type="submit" class="btn btn-secondary" value="Upload Car"/>
+                    <div class="button-holder d-flex ">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </main>
+<footer th:replace="fragments/footer::footer"/>
 </body>
 </html>

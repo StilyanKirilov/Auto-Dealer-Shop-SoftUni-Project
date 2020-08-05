@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import softuni.springbootvehicles.model.entity.*;
+import softuni.springbootvehicles.model.entity.Brand;
+import softuni.springbootvehicles.model.entity.Model;
+import softuni.springbootvehicles.model.entity.Role;
+import softuni.springbootvehicles.model.entity.User;
 import softuni.springbootvehicles.service.BrandService;
 import softuni.springbootvehicles.service.OfferService;
 import softuni.springbootvehicles.service.UserService;
@@ -22,8 +25,6 @@ import static softuni.springbootvehicles.model.entity.VehicleCategory.*;
 public class DataInitializer implements CommandLineRunner {
     @Autowired
     private BrandService brandService;
-    @Autowired
-    private OfferService offerService;
     @Autowired
     private UserService userService;
 
@@ -124,7 +125,7 @@ public class DataInitializer implements CommandLineRunner {
     );
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (userService.getUserCount() == 0) {
             SAMPLE_USERS.forEach(user -> userService.createUser(user));
             log.info("Created Users: {}", userService.getUsers());
@@ -137,41 +138,6 @@ public class DataInitializer implements CommandLineRunner {
             });
             log.info("Created Brands: {}", brandService.getBrands());
         }
-
-//        if (offerService.getOffersCount() == 0) {
-//
-//            Model model = this.brandService
-//                    .getBrandByName("BMW")
-//                    .getModels()
-//                    .stream()
-//                    .filter(m -> m.getName().equals("M3"))
-//                    .findFirst().orElse(null);
-//
-//
-//            Model model2 = this.brandService
-//                    .getBrandByName("Opel")
-//                    .getModels()
-//                    .stream()
-//                    .filter(m -> m.getName().equals("Omega A"))
-//                    .findFirst().orElse(null);
-//
-//            Offer offer = new Offer();
-//            offer.setModel(model);
-//            offer.setCategory(model.getCategory());
-//            offer.setYear(2000);
-//            offer.setEngine(EngineType.DIESEL);
-//            offer.setTransmission(TransmissionType.AUTOMATIC);
-//
-//            Offer offer2 = new Offer();
-//            offer2.setModel(model2);
-//            offer2.setCategory(model2.getCategory());
-//            offer2.setYear(1992);
-//            offer2.setEngine(EngineType.GASOLINE);
-//            offer2.setTransmission(TransmissionType.MANUAL);
-//
-//            this.offerService.createOffer(offer);
-//            this.offerService.createOffer(offer2);
-//        }
 
     }
 }

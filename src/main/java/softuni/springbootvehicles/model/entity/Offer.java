@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Date;
 
@@ -24,26 +24,27 @@ public class Offer {
     @EqualsAndHashCode.Include
     private Long id;
 
-//    @NonNull
+    //    @NonNull
     private VehicleCategory category;
 
 //    @NonNull
+    @NotNull
     @ManyToOne
     private Model model;
 
-//    @NonNull
-   // @PastOrPresent
+    //    @NonNull
+    // @PastOrPresent
     @Min(1900)
     private Integer year;
 
-//    @NonNull
+    //    @NonNull
     @Positive
     private Integer mileage;
 
-//    @NonNull
+    //    @NonNull
     private EngineType engine;
 
-//    @NonNull
+    //    @NonNull
     private TransmissionType transmission;
 
     @NonNull
@@ -51,17 +52,21 @@ public class Offer {
     private String description;
 
     @NonNull
-   // @PastOrPresent
+    // @PastOrPresent
     @Positive
     private Double price;
 
-//    @NonNull
+    //    @NonNull
     @Length(min = 8, max = 512)
     private String imageUrl;
 
     @ManyToOne(optional = true)
     @ToString.Exclude
     private User seller;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
+    private Long modelId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Transient

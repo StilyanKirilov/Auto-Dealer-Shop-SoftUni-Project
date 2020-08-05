@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Model {
+public class Model implements Comparable<Model> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +54,10 @@ public class Model {
         this.startYear = startYear;
         this.imageUrl = imageUrl;
         this.endYear = endYear;
+    }
+
+    @Override
+    public int compareTo(Model o) {
+        return name.compareToIgnoreCase(o.getName());
     }
 }
