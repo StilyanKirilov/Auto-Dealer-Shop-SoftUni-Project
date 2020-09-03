@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softuni.springbootvehicles.exception.EntityNotFoundException;
 import softuni.springbootvehicles.model.entity.Brand;
+import softuni.springbootvehicles.model.entity.Model;
 import softuni.springbootvehicles.repository.BrandRepository;
 import softuni.springbootvehicles.repository.UserRepository;
 import softuni.springbootvehicles.service.BrandService;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,5 +88,19 @@ public class BrandServiceImpl implements BrandService {
 
         return brands.stream()
                 .map(brand -> createBrand(brand)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Model> getModelById(Long id) {
+        List<Brand> brands = this.brandRepository.findAll();
+        Optional<Model> model = Optional.empty();
+        for (Brand brand : brands) {
+            for (Model model1 : brand.getModels()) {
+                if (model1.getId().equals(id)) {
+                    model = Optional.of(model1);
+                }
+            }
+        }
+        return model;
     }
 }

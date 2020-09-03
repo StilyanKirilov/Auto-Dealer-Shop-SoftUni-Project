@@ -23,5 +23,5 @@ public interface OfferService {
 
     List<Offer> createOffersBatch(List<Offer> offers);
 
-    Optional<Model> findModelById(Long modelId);
+//    Optional<Model> findModelById(Long modelId);
 }

@@ -27,37 +27,44 @@ public class Offer {
     //    @NonNull
     private VehicleCategory category;
 
-//    @NonNull
-    @NotNull
+    //    @NonNull
+    @NotNull(message = "Vehicle model is required")
     @ManyToOne
     private Model model;
 
     //    @NonNull
     // @PastOrPresent
+    @NotNull(message = "Manufacturing year is required")
     @Min(1900)
     private Integer year;
 
     //    @NonNull
     @Positive
+    @NotNull(message = "Vehicle mileage in km is required")
     private Integer mileage;
 
     //    @NonNull
+    @NotNull(message = "Vehicle engine type is required")
     private EngineType engine;
 
     //    @NonNull
+    @NotNull(message = "Vehicle transmission type is required")
     private TransmissionType transmission;
 
     @NonNull
-    @Length(min = 2, max = 512)
+    @NotNull(message = "Vehicle description is required")
+    @Length(min = 2, max = 512,message = "Length must be between 2 and 512 symbols")
     private String description;
 
-    @NonNull
+    //    @NonNull
     // @PastOrPresent
     @Positive
+    @NotNull(message = "Vehicle price is required")
     private Double price;
 
     //    @NonNull
-    @Length(min = 8, max = 512)
+    @NotNull(message = "Vehicle image URL is required")
+    @Length(min = 8, max = 512, message = "Length must be between 8 nad 512 symbols")
     private String imageUrl;
 
     @ManyToOne(optional = true)

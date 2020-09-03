@@ -9,9 +9,9 @@ import softuni.springbootvehicles.model.entity.Brand;
 import softuni.springbootvehicles.model.entity.Model;
 import softuni.springbootvehicles.model.entity.Offer;
 import softuni.springbootvehicles.model.entity.User;
-import softuni.springbootvehicles.repository.BrandRepository;
 import softuni.springbootvehicles.repository.OfferRepository;
 import softuni.springbootvehicles.repository.UserRepository;
+import softuni.springbootvehicles.service.BrandService;
 import softuni.springbootvehicles.service.OfferService;
 
 import javax.validation.Valid;
@@ -26,13 +26,14 @@ public class OfferServiceImpl implements OfferService {
 
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
+
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, UserRepository userRepository, BrandRepository brandRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, UserRepository userRepository, BrandService brandService) {
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
-        this.brandRepository = brandRepository;
+        this.brandService = brandService;
     }
 
     @Override
@@ -70,7 +71,7 @@ public class OfferServiceImpl implements OfferService {
         }
 
         if (modelId != null) {
-            Model model = this.findModelById(modelId)
+            Model model = this.brandService.getModelById(modelId)
                     .orElseThrow(() -> new InvalidEntityException("Model with ID=" + modelId + " does not exist."));
             offer.setModel(model);
         }
@@ -116,17 +117,8 @@ public class OfferServiceImpl implements OfferService {
                 .map(offer -> createOffer(offer)).collect(Collectors.toList());
     }
 
-    @Override
-    public Optional<Model> findModelById(Long modelId) {
-        List<Brand> brands = this.brandRepository.findAll();
-        Optional<Model> model = Optional.empty();
-        for (Brand brand : brands) {
-            for (Model model1 : brand.getModels()) {
-                if (model1.getId().equals(modelId)) {
-                    model = Optional.of(model1);
-                }
-            }
-        }
-        return model;
-    }
+//    @Override
+//    public Optional<Model> findModelById(Long modelId) {
+//        return this.brandService.getModelById(modelId);
+//    }
 }
